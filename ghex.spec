@@ -1,22 +1,25 @@
 Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.4.1
+Version:	2.5.2
 Release:	1
 Group:		Applications/Editors
 License:	GPL
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	8252eb70a1eb6f2b9283c0b65118702b
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.5/%{name}-%{version}.tar.bz2
+# Source0-md5:	95dc4caef992ae0ea5b3a3e20b235e39
 Patch0:		%{name}-schema.patch
+Patch1:		%{name}-locale-names.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-BuildRequires:	atk-devel >= 1.4.1
+BuildRequires:	atk-devel >= 1.6.0
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.4.1
-BuildRequires:	gtk+2-devel >= 2.2.4
-BuildRequires:	libglade2-devel >= 2.0.1
-BuildRequires:	libgnomeui-devel >= 2.4.0
-BuildRequires:	libgnomeprintui-devel >= 2.3.1
+BuildRequires:	gail-devel >= 1.6.0
+BuildRequires:	gtk+2-devel >= 2:2.4.0
+BuildRequires:	intltool
+BuildRequires:	libglade2-devel >= 1:2.3.6
+BuildRequires:	libgnomeui-devel >= 2.6.0
+BuildRequires:	libgnomeprintui-devel >= 2.6.0
+BuildRequires:	libtool
 BuildRequires:	popt-devel
 BuildRequires:	scrollkeeper
 Requires(post,postun):	/sbin/ldconfig
@@ -39,7 +42,9 @@ innym ni¿ tekstowy.
 Summary:	GHex devel files
 Summary(pl):	Pliki nag³ówkowe GHex
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
+Requires:	gail-devel >= 1.6.0
+Requires:	gtk+2-devel >= 2:2.4.0
 
 %description devel
 GHex devel files.
@@ -51,7 +56,7 @@ Pliki nag³ówkowe GHex.
 Summary:	GHex static library
 Summary(pl):	Biblioteka statyczna GHex
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 GHex static library.
@@ -62,9 +67,14 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+
+mv po/{no,nb}.po
 
 %build
 glib-gettextize --copy --force
+intltoolize --copy --force
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
