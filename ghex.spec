@@ -9,7 +9,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.6/%{name}-%{version}.t
 # Source0-md5:	fce2cb6f26c2082a9dc2687e504dc6c6
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
-URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
+URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	GConf2-devel >= 2.6.1
 BuildRequires:	atk-devel >= 1.6.1
 BuildRequires:	autoconf >= 2.53
