@@ -2,13 +2,14 @@ Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.8.1
-Release:	1
+Release:	2
 Group:		Applications/Editors
 License:	GPL
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.8/%{name}-%{version}.tar.bz2
 # Source0-md5:	ef17f945b9dc701193451f9b083e5116
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
+Patch2:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	GConf2-devel >= 2.6.1
 BuildRequires:	atk-devel >= 1.6.1
@@ -69,6 +70,7 @@ Biblioteka statyczna GHex.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 mv po/{no,nb}.po
 
