@@ -1,22 +1,22 @@
 Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.5.0
+Version:	2.5.1
 Release:	1
 Group:		Applications/Editors
 License:	GPL
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	d9c26a7ee9934d67e18011a506b40d2d
+# Source0-md5:	f03c7e6b39f589b477d5ddf9d7d1bc44
 Patch0:		%{name}-schema.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-BuildRequires:	atk-devel >= 1.4.1
+BuildRequires:	atk-devel >= 1.5.1
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.4.1
-BuildRequires:	gtk+2-devel >= 2.2.4
-BuildRequires:	libglade2-devel >= 2.0.1
-BuildRequires:	libgnomeui-devel >= 2.4.0
-BuildRequires:	libgnomeprintui-devel >= 2.3.1
+BuildRequires:	gail-devel >= 1.5.1
+BuildRequires:	gtk+2-devel >= 2.3.0
+BuildRequires:	libglade2-devel >= 2.3.1
+BuildRequires:	libgnomeui-devel >= 2.5.0
+BuildRequires:	libgnomeprintui-devel >= 2.5.0
 BuildRequires:	popt-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
