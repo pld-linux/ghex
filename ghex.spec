@@ -1,25 +1,25 @@
 Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.6.0
+Version:	2.6.1
 Release:	1
 Group:		Applications/Editors
 License:	GPL
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	a8df77d7f571503005a0bf42222a338a
+# Source0-md5:	fce2cb6f26c2082a9dc2687e504dc6c6
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-BuildRequires:	GConf2-devel >= 2.6.0
-BuildRequires:	atk-devel >= 1.6.0
+BuildRequires:	GConf2-devel >= 2.6.1
+BuildRequires:	atk-devel >= 1.6.1
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.6.0
-BuildRequires:	gtk+2-devel >= 2:2.4.0
+BuildRequires:	gail-devel >= 1.6.5
+BuildRequires:	gtk+2-devel >= 2:2.4.1
 BuildRequires:	intltool >= 0.30
-BuildRequires:	libglade2-devel >= 1:2.3.6
-BuildRequires:	libgnomeui-devel >= 2.6.0
-BuildRequires:	libgnomeprintui-devel >= 2.6.0
+BuildRequires:	libglade2-devel >= 1:2.4.0
+BuildRequires:	libgnomeui-devel >= 2.6.1
+BuildRequires:	libgnomeprintui-devel >= 2.6.1
 BuildRequires:	libtool
 BuildRequires:	popt-devel
 BuildRequires:	scrollkeeper
@@ -44,8 +44,8 @@ Summary:	GHex devel files
 Summary(pl):	Pliki nag³ówkowe GHex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gail-devel >= 1.6.0
-Requires:	gtk+2-devel >= 2:2.4.0
+Requires:	gail-devel >= 1.6.5
+Requires:	gtk+2-devel >= 2:2.4.1
 
 %description devel
 GHex devel files.
