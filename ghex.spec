@@ -85,7 +85,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libgtkhex.so.*.*.*
-%{_datadir}/applications/*
+%{_desktopdir}/*
 %{_pixmapsdir}/*
 %{_datadir}/gnome-2.0/ui/*
 %{_sysconfdir}/gconf/schemas/*
