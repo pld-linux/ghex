@@ -6,6 +6,7 @@ Release:	1
 Group:		Applications/Editors
 License:	GPL
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	3336add8b5ee6c95ab851053f4b668c8
 Patch0:		%{name}-schema.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
 BuildRequires:	gtk+2-devel 
