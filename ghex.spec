@@ -10,7 +10,7 @@ Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.3/%{name}-%{version}.tar.b
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-compile_fix.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-BuildRequires:	gtk+2-devel 
+BuildRequires:	gtk+2-devel
 BuildRequires:	libgnomeprint-devel >= 2.2.0
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
