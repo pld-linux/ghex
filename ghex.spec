@@ -10,12 +10,13 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.6/%{name}-%{version}.t
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
+BuildRequires:	GConf2-devel >= 2.6.0
 BuildRequires:	atk-devel >= 1.6.0
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gail-devel >= 1.6.0
 BuildRequires:	gtk+2-devel >= 2:2.4.0
-BuildRequires:	intltool
+BuildRequires:	intltool >= 0.30
 BuildRequires:	libglade2-devel >= 1:2.3.6
 BuildRequires:	libgnomeui-devel >= 2.6.0
 BuildRequires:	libgnomeprintui-devel >= 2.6.0
