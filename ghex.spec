@@ -1,17 +1,18 @@
 Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.3.0
-Release:	2
+Version:	2.4.0
+Release:	1
 Group:		Applications/Editors
 License:	GPL
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	3336add8b5ee6c95ab851053f4b668c8
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/%{name}/2.4/%{name}-%{version}.tar.bz2
+# Source0-md5:	d32fe1a502ca0a18ebc3d97eeaa8a8c5
 Patch0:		%{name}-schema.patch
-Patch1:		%{name}-compile_fix.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-BuildRequires:	gtk+2-devel
-BuildRequires:	libgnomeprint-devel >= 2.2.0
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gtk+2-devel >= 2.2.4
+BuildRequires:	libgnomeprint-devel >= 2.3.1
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):	GConf2
@@ -55,10 +56,14 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-%configure --disable-schemas-install
+glib-gettextize --copy --force
+%{__aclocal}
+%{__autoconf}
+%{__automake}
+%configure \
+	--disable-schemas-install
 
 %{__make}
 
@@ -66,7 +71,8 @@ Biblioteka statyczna GHex.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -84,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/libgtkhex.so.*.*.*
 %{_desktopdir}/*
