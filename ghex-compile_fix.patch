@@ -1,0 +1,12 @@
+diff -urN aaa/ghex-2.3.0/src/ui.c ghex-2.3.0/src/ui.c
+--- aaa/ghex-2.3.0/src/ui.c	2003-02-25 22:45:39.000000000 +0100
++++ ghex-2.3.0/src/ui.c	2003-08-01 12:40:44.000000000 +0200
+@@ -875,7 +875,7 @@
+ 	g_return_if_fail (msg != NULL);
+ 	va_start(args, msg);
+ 	real_msg = g_strdup_vprintf(msg, args);
+-	va_end(msg);
++	va_end(args);
+ 	info_dlg = gtk_message_dialog_new (
+ 			GTK_WINDOW (win),
+ 			GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
