@@ -16,12 +16,14 @@ BuildRequires:	atk-devel >= 1.6.1
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
 BuildRequires:	gail-devel >= 1.6.5
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.4.1
 BuildRequires:	intltool >= 0.30
 BuildRequires:	libglade2-devel >= 1:2.4.0
 BuildRequires:	libgnomeui-devel >= 2.6.1
 BuildRequires:	libgnomeprintui-devel >= 2.6.1
 BuildRequires:	libtool
+BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	scrollkeeper
 Requires(post,postun):	/sbin/ldconfig
