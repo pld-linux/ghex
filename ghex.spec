@@ -2,19 +2,20 @@ Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.3.0
-Release:	1
+Release:	2
 Group:		Applications/Editors
 License:	GPL
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.3/%{name}-%{version}.tar.bz2
 # Source0-md5:	3336add8b5ee6c95ab851053f4b668c8
 Patch0:		%{name}-schema.patch
+Patch1:		%{name}-compile_fix.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
 BuildRequires:	gtk+2-devel 
 BuildRequires:	libgnomeprint-devel >= 2.2.0
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):	GConf2
-BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 GHex allows the user to load data from any file, view and edit it in
@@ -54,6 +55,7 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure --disable-schemas-install
