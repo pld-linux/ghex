@@ -8,10 +8,11 @@ License:	GPL
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.3/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-schema.patch
 URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-Requires(post):	/usr/bin/scrollkeeper-update
-Requires(post):	GConf2
 BuildRequires:	gtk+2-devel 
 BuildRequires:	libgnomeprint-devel >= 2.2.0
+Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	/usr/bin/scrollkeeper-update
+Requires(post):	GConf2
 BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,22 +33,22 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
 %description devel
-GHex devel files
+GHex devel files.
 
 %description devel -l pl
-Pliki nag³ówkowe GHex
+Pliki nag³ówkowe GHex.
 
 %package static
-Summary:	GHex static lib
+Summary:	GHex static library
 Summary(pl):	Biblioteka statyczna GHex
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
 %description static
-GHex static lib
+GHex static library.
 
 %description static -l pl
-Biblioteka statyczna GHex
+Biblioteka statyczna GHex.
 
 %prep
 %setup -q
@@ -70,11 +71,13 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 /usr/bin/scrollkeeper-update
 %gconf_schema_install
-/sbin/ldconfig
 
-%postun -p /usr/bin/scrollkeeper-update
+%postun
+/sbin/ldconfig
+/usr/bin/scrollkeeper-update
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -89,9 +92,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
-%{_libdir}/libgtkhex.so
+%attr(755,root,root) %{_libdir}/libgtkhex.so
 %{_libdir}/libgtkhex.la
+%{_includedir}/*
 %{_pkgconfigdir}/*.pc
 
 %files static
