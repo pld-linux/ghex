@@ -5,10 +5,12 @@ Version:	2.2.0
 Release:	1
 Group:		Applications/Editors
 License:	GPL
-URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
-Source0:	http://ftp.gnome.org/pub/GNOME/stable/sources/ghex/%{name}-%{version}.tar.bz2
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/ghex/2.2/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-omf.patch
 Patch1:		%{name}-schema.patch
+URL:		http://pluton.ijs.si/~jaka/gnome.html#GHEX
+Requires(post):	/usr/bin/scrollkeeper-update
+Requires(post):	GConf2
 BuildRoot:      %{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -17,12 +19,12 @@ either hex or ascii. A must for anyone playing games that use
 non-ascii format for saving.
 
 %description -l pl
-GHex pozwala urzytkownikowi na wczytanie danych z dowolnego pliku, 
-przegl±danie i edycjê ich w trybie szesnastkowym i ASCII. Obowi±zkowe narzêdzie
-dla wszystkich graczy których gry nie zapisuj± stanu w trybie znakowym.
+GHex pozwala u¿ytkownikowi na wczytanie danych z dowolnego pliku,
+przegl±danie i edycjê ich w trybie szesnastkowym i ASCII. Obowi±zkowe
+narzêdzie dla wszystkich graczy, których gry zapisuj± stan w formacie
+innym ni¿ tekstowy.
 
 %prep
-
 %setup -q
 %patch0 -p1
 %patch1 -p1
@@ -33,8 +35,8 @@ dla wszystkich graczy których gry nie zapisuj± stanu w trybie znakowym.
 %{__make}
 
 %install
-
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -51,7 +53,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc README COPYING AUTHORS
+%doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/applications/*
 %{_pixmapsdir}/*
