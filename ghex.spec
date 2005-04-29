@@ -2,10 +2,10 @@ Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.8.1
-Release:	2
+Release:	3
 Group:		Applications/Editors
 License:	GPL
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/2.8/%{name}-%{version}.tar.bz2
+Source0:	http://ftp.gnome.org/pub/gnome/sources/ghex/2.8/%{name}-%{version}.tar.bz2
 # Source0-md5:	ef17f945b9dc701193451f9b083e5116
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
@@ -25,10 +25,11 @@ BuildRequires:	libgnomeprintui-devel >= 2.6.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
+BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
 Requires(post,postun):	/sbin/ldconfig
-Requires(post,postun):	/usr/bin/scrollkeeper-update
-Requires(post):	GConf2
+Requires(post,preun):	GConf2
+Requires(post,postun):	scrollkeeper
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -77,15 +78,14 @@ Biblioteka statyczna GHex.
 mv po/{no,nb}.po
 
 %build
-glib-gettextize --copy --force
-intltoolize --copy --force
+%{__glib_gettextize}
+%{__intltoolize}
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
 %configure \
 	--disable-schemas-install
-
 %{__make}
 
 %install
@@ -102,12 +102,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-/usr/bin/scrollkeeper-update
-%gconf_schema_install
+%scrollkeeper_update_post
+%gconf_schema_install ghex2.scheams
+
+%preun
+%gconf_schema_uninstall ghex2.scheams
 
 %postun
 /sbin/ldconfig
-/usr/bin/scrollkeeper-update
+%scrollkeeper_update_postun
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
