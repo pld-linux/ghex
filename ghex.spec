@@ -103,10 +103,10 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 %scrollkeeper_update_post
-%gconf_schema_install ghex2.scheams
+%gconf_schema_install ghex2.schemas
 
 %preun
-%gconf_schema_uninstall ghex2.scheams
+%gconf_schema_uninstall ghex2.schemas
 
 %postun
 /sbin/ldconfig
