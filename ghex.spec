@@ -1,12 +1,12 @@
 Summary:	GNOME2 binary editor
 Summary(pl):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.8.1
-Release:	3
+Version:	2.8.2
+Release:	1
 Group:		Applications/Editors
 License:	GPL
 Source0:	http://ftp.gnome.org/pub/gnome/sources/ghex/2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	ef17f945b9dc701193451f9b083e5116
+# Source0-md5:	1940a9f63b0d37604c6b489cda37fc19
 Patch0:		%{name}-schema.patch
 Patch1:		%{name}-locale-names.patch
 Patch2:		%{name}-desktop.patch
