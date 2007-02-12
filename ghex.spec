@@ -1,5 +1,5 @@
 Summary:	GNOME2 binary editor
-Summary(pl):	Edytor binarny dla GNOME2
+Summary(pl.UTF-8):   Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.8.2
 Release:	1
@@ -37,15 +37,15 @@ GHex allows the user to load data from any file, view and edit it in
 either hex or ascii. A must for anyone playing games that use
 non-ascii format for saving.
 
-%description -l pl
-GHex pozwala uøytkownikowi na wczytanie danych z dowolnego pliku,
-przegl±danie i edycjÍ ich w trybie szesnastkowym i ASCII. Obowi±zkowe
-narzÍdzie dla wszystkich graczy, ktÛrych gry zapisuj± stan w formacie
-innym niø tekstowy.
+%description -l pl.UTF-8
+GHex pozwala u≈ºytkownikowi na wczytanie danych z dowolnego pliku,
+przeglƒÖdanie i edycjƒô ich w trybie szesnastkowym i ASCII. ObowiƒÖzkowe
+narzƒôdzie dla wszystkich graczy, kt√≥rych gry zapisujƒÖ stan w formacie
+innym ni≈º tekstowy.
 
 %package devel
 Summary:	GHex devel files
-Summary(pl):	Pliki nag≥Ûwkowe GHex
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe GHex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gail-devel >= 1.6.5
@@ -54,19 +54,19 @@ Requires:	gtk+2-devel >= 2:2.4.1
 %description devel
 GHex devel files.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe GHex.
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe GHex.
 
 %package static
 Summary:	GHex static library
-Summary(pl):	Biblioteka statyczna GHex
+Summary(pl.UTF-8):   Biblioteka statyczna GHex
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 GHex static library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Biblioteka statyczna GHex.
 
 %prep
