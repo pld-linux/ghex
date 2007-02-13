@@ -1,5 +1,5 @@
 Summary:	GNOME2 binary editor
-Summary(pl.UTF-8):   Edytor binarny dla GNOME2
+Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.8.2
 Release:	1
@@ -45,7 +45,7 @@ innym niż tekstowy.
 
 %package devel
 Summary:	GHex devel files
-Summary(pl.UTF-8):   Pliki nagłówkowe GHex
+Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gail-devel >= 1.6.5
@@ -59,7 +59,7 @@ Pliki nagłówkowe GHex.
 
 %package static
 Summary:	GHex static library
-Summary(pl.UTF-8):   Biblioteka statyczna GHex
+Summary(pl.UTF-8):	Biblioteka statyczna GHex
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
