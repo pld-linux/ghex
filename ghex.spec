@@ -1,35 +1,31 @@
 Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.8.2
+Version:	2.19.91
 Release:	1
+License:	GPL v2
 Group:		Applications/Editors
-License:	GPL
-Source0:	http://ftp.gnome.org/pub/gnome/sources/ghex/2.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	1940a9f63b0d37604c6b489cda37fc19
-Patch0:		%{name}-schema.patch
-Patch1:		%{name}-locale-names.patch
-Patch2:		%{name}-desktop.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.19/%{name}-%{version}.tar.bz2
+# Source0-md5:	7ecb7e2a8c8a04e89c4188b68ce52d09
+Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
-BuildRequires:	GConf2-devel >= 2.6.1
-BuildRequires:	atk-devel >= 1.6.1
+BuildRequires:	GConf2-devel >= 2.19.1
+BuildRequires:	atk-devel >= 1:1.19.6
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.6.5
+BuildRequires:	gail-devel >= 1.19.6
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+2-devel >= 2:2.4.1
-BuildRequires:	intltool >= 0.30
-BuildRequires:	libglade2-devel >= 1:2.4.0
-BuildRequires:	libgnomeui-devel >= 2.6.1
-BuildRequires:	libgnomeprintui-devel >= 2.6.1
+BuildRequires:	gtk+2-devel >= 2:2.12.0
+BuildRequires:	intltool >= 0.36.1
+BuildRequires:	libgnomeprintui-devel >= 2.18.0
+BuildRequires:	libgnomeui-devel >= 2.19.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
-BuildRequires:	rpmbuild(macros) >= 1.197
-BuildRequires:	scrollkeeper
+BuildRequires:	rpmbuild(macros) >= 1.311
 Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	gtk+2
 Requires(post,preun):	GConf2
-Requires(post,postun):	scrollkeeper
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -48,8 +44,9 @@ Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gail-devel >= 1.6.5
-Requires:	gtk+2-devel >= 2:2.4.1
+Requires:	atk-devel >= 1:1.19.6
+Requires:	gail-devel >= 1.19.6
+Requires:	gtk+2-devel >= 2:2.12.0
 
 %description devel
 GHex devel files.
@@ -72,10 +69,6 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-
-mv po/{no,nb}.po
 
 %build
 %{__glib_gettextize}
@@ -102,34 +95,33 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-%scrollkeeper_update_post
 %gconf_schema_install ghex2.schemas
+%update_icon_cache hicolor
 
 %preun
 %gconf_schema_uninstall ghex2.schemas
 
 %postun
 /sbin/ldconfig
-%scrollkeeper_update_postun
+%update_icon_cache hicolor
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/ghex2
 %attr(755,root,root) %{_libdir}/libgtkhex.so.*.*.*
-%{_desktopdir}/*.desktop
-%{_pixmapsdir}/*
+%{_desktopdir}/ghex.desktop
+%{_iconsdir}/hicolor/*/*/*
 %{_datadir}/gnome-2.0/ui/*
-%{_sysconfdir}/gconf/schemas/*
-%{_omf_dest_dir}/%{name}
+%{_sysconfdir}/gconf/schemas/ghex2.schemas
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgtkhex.so
 %{_libdir}/libgtkhex.la
-%{_includedir}/*
-%{_pkgconfigdir}/*.pc
+%{_includedir}/gtkhex
+%{_pkgconfigdir}/gtkhex.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libgtkhex.a
