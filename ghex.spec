@@ -1,19 +1,19 @@
 Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.19.91
+Version:	2.20.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.19/%{name}-%{version}.tar.bz2
-# Source0-md5:	7ecb7e2a8c8a04e89c4188b68ce52d09
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.20/%{name}-%{version}.tar.bz2
+# Source0-md5:	7f76315b08f0d54d58540bae2f014394
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	GConf2-devel >= 2.19.1
-BuildRequires:	atk-devel >= 1:1.19.6
+BuildRequires:	atk-devel >= 1:1.20.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.19.6
+BuildRequires:	gail-devel >= 1.20.0
 BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.12.0
 BuildRequires:	intltool >= 0.36.1
@@ -44,8 +44,8 @@ Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:1.19.6
-Requires:	gail-devel >= 1.19.6
+Requires:	atk-devel >= 1:1.20.0
+Requires:	gail-devel >= 1.20.0
 Requires:	gtk+2-devel >= 2:2.12.0
 
 %description devel
