@@ -2,7 +2,7 @@ Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.20.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		Applications/Editors
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.20/%{name}-%{version}.tar.bz2
@@ -26,6 +26,8 @@ BuildRequires:	rpmbuild(macros) >= 1.311
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	gtk+2
 Requires(post,preun):	GConf2
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -88,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
+[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
+	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 %find_lang %{name} --with-gnome --all-name
 
 %clean
