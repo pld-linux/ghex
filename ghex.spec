@@ -1,15 +1,15 @@
 Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.20.0
-Release:	2
+Version:	2.20.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Editors
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.20/%{name}-%{version}.tar.bz2
-# Source0-md5:	7f76315b08f0d54d58540bae2f014394
+# Source0-md5:	c14943b79caed9b3c5362075d3f278cc
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
-BuildRequires:	GConf2-devel >= 2.19.1
+BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	atk-devel >= 1:1.20.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
@@ -18,13 +18,15 @@ BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.12.0
 BuildRequires:	intltool >= 0.36.1
 BuildRequires:	libgnomeprintui-devel >= 2.18.0
-BuildRequires:	libgnomeui-devel >= 2.19.1
+BuildRequires:	libgnomeui-devel >= 2.20.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
 BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	sed >= 4.0
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	gtk+2
+Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun):	GConf2
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -72,6 +74,9 @@ Biblioteka statyczna GHex.
 %setup -q
 %patch0 -p1
 
+sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
+mv po/sr@{Latn,latin}.po
+
 %build
 %{__glib_gettextize}
 %{__intltoolize}
@@ -90,8 +95,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
-	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
 %find_lang %{name} --with-gnome --all-name
 
 %clean
