@@ -1,24 +1,25 @@
 Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.20.1
+Version:	2.22.0
 Release:	1
 License:	GPL v2
-Group:		Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.20/%{name}-%{version}.tar.bz2
-# Source0-md5:	c14943b79caed9b3c5362075d3f278cc
+Group:		X11/Applications/Editors
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.22/%{name}-%{version}.tar.bz2
+# Source0-md5:	6f1ee7a56f7dd04bfba5ee74a639948a
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	GConf2-devel >= 2.20.0
-BuildRequires:	atk-devel >= 1:1.20.0
+BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.20.0
+BuildRequires:	gail-devel >= 1.22.0
 BuildRequires:	gettext-devel
-BuildRequires:	gtk+2-devel >= 2:2.12.0
+BuildRequires:	gnome-doc-utils >= 0.12.0
+BuildRequires:	gtk+2-devel >= 2:2.12.9
 BuildRequires:	intltool >= 0.36.1
 BuildRequires:	libgnomeprintui-devel >= 2.18.0
-BuildRequires:	libgnomeui-devel >= 2.20.1
+BuildRequires:	libgnomeui-devel >= 2.22.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	popt-devel
@@ -46,11 +47,11 @@ innym niż tekstowy.
 %package devel
 Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:1.20.0
-Requires:	gail-devel >= 1.20.0
-Requires:	gtk+2-devel >= 2:2.12.0
+Requires:	atk-devel >= 1:1.22.0
+Requires:	gail-devel >= 1.22.0
+Requires:	gtk+2-devel >= 2:2.12.9
 
 %description devel
 GHex devel files.
@@ -61,7 +62,7 @@ Pliki nagłówkowe GHex.
 %package static
 Summary:	GHex static library
 Summary(pl.UTF-8):	Biblioteka statyczna GHex
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
@@ -83,6 +84,7 @@ mv po/sr@{Latn,latin}.po
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure \
 	--disable-schemas-install
@@ -117,6 +119,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/ghex2
 %attr(755,root,root) %{_libdir}/libgtkhex.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtkhex.so.0
 %{_desktopdir}/ghex.desktop
 %{_iconsdir}/hicolor/*/*/*
 %{_datadir}/gnome-2.0/ui/*
