@@ -2,7 +2,7 @@ Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	2.24.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.24/%{name}-%{version}.tar.bz2
@@ -26,7 +26,7 @@ BuildRequires:	popt-devel
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
 Requires(post,postun):	/sbin/ldconfig
-Requires(post,postun):	gtk+2
+Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,preun):	GConf2
 # sr@Latn vs. sr@latin
