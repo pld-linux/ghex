@@ -2,13 +2,12 @@ Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
 Version:	3.0.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.0/%{name}-%{version}.tar.xz
 # Source0-md5:	ffa346d6fa97b9e787680159a5479b84
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-static.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.53
@@ -67,7 +66,6 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__glib_gettextize}
@@ -78,7 +76,8 @@ Biblioteka statyczna GHex.
 %{__autoheader}
 %{__automake}
 %configure \
-	--disable-schemas-compile
+	--disable-schemas-compile \
+	--enable-static
 %{__make}
 
 %install
