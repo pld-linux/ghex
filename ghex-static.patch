@@ -1,0 +1,12 @@
+diff -urN ghex-3.0.0/configure.ac ghex-3.0.0.static/configure.ac
+--- ghex-3.0.0/configure.ac	2011-09-26 19:27:22.000000000 +0200
++++ ghex-3.0.0.static/configure.ac	2011-10-29 11:03:59.000000000 +0200
+@@ -15,7 +15,7 @@
+ 
+ # Initialize libtool
+ LT_PREREQ([2.2.6])
+-LT_INIT([disable-static])
++LT_INIT()
+ 
+ # Check for header files.
+ AC_CHECK_HEADERS([string.h unistd.h])

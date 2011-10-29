@@ -1,35 +1,29 @@
 Summary:	GNOME2 binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME2
 Name:		ghex
-Version:	2.24.0
-Release:	2
+Version:	3.0.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/2.24/%{name}-%{version}.tar.bz2
-# Source0-md5:	982b2a4e70e80d2166bcc782e989889c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.0/%{name}-%{version}.tar.xz
+# Source0-md5:	ffa346d6fa97b9e787680159a5479b84
 Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-static.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
-BuildRequires:	GConf2-devel >= 2.20.0
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.53
 BuildRequires:	automake
-BuildRequires:	gail-devel >= 1.22.0
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils >= 0.12.0
-BuildRequires:	gtk+2-devel >= 2:2.12.9
+BuildRequires:	gtk+3-devel
 BuildRequires:	intltool >= 0.36.1
-BuildRequires:	libgnomeprintui-devel >= 2.18.0
-BuildRequires:	libgnomeui-devel >= 2.22.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	popt-devel
 BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	sed >= 4.0
 Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	glib2 >= 1:2.26.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,preun):	GConf2
-# sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,9 +34,9 @@ non-ascii format for saving.
 
 %description -l pl.UTF-8
 GHex pozwala użytkownikowi na wczytanie danych z dowolnego pliku,
-przeglądanie i edycję ich w trybie szesnastkowym i ASCII. Obowiązkowe
-narzędzie dla wszystkich graczy, których gry zapisują stan w formacie
-innym niż tekstowy.
+przeglądanie i edycję ich w trybie szesnastkowym i ASCII.
+Obowiązkowe narzędzie dla wszystkich graczy, których gry zapisują
+stan w formacie innym niż tekstowy.
 
 %package devel
 Summary:	GHex devel files
@@ -50,8 +44,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	atk-devel >= 1:1.22.0
-Requires:	gail-devel >= 1.22.0
-Requires:	gtk+2-devel >= 2:2.12.9
+Requires:	gtk+3-devel
 
 %description devel
 GHex devel files.
@@ -74,9 +67,7 @@ Biblioteka statyczna GHex.
 %prep
 %setup -q
 %patch0 -p1
-
-sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
-mv po/sr@{Latn,latin}.po
+%patch1 -p1
 
 %build
 %{__glib_gettextize}
@@ -87,51 +78,49 @@ mv po/sr@{Latn,latin}.po
 %{__autoheader}
 %{__automake}
 %configure \
-	--disable-schemas-install
+	--disable-schemas-compile
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+	DESTDIR=$RPM_BUILD_ROOT
 
-%find_lang %{name} --with-gnome --all-name
+%find_lang %{name} --with-gnome --with-omf --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/ldconfig
-%gconf_schema_install ghex2.schemas
 %update_icon_cache hicolor
-
-%preun
-%gconf_schema_uninstall ghex2.schemas
+%glib_compile_schemas
 
 %postun
 /sbin/ldconfig
 %update_icon_cache hicolor
+%glib_compile_schemas
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
-%attr(755,root,root) %{_bindir}/ghex2
-%attr(755,root,root) %{_libdir}/libgtkhex.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtkhex.so.0
+%attr(755,root,root) %{_bindir}/ghex
+%attr(755,root,root) %{_libdir}/libgtkhex-3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtkhex-3.so.0
+%{_datadir}/GConf/gsettings/ghex.convert
+%{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_desktopdir}/ghex.desktop
 %{_iconsdir}/hicolor/*/*/*
-%{_datadir}/gnome-2.0/ui/*
-%{_sysconfdir}/gconf/schemas/ghex2.schemas
+%{_datadir}/ghex/ghex-ui.xml
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtkhex.so
-%{_libdir}/libgtkhex.la
-%{_includedir}/gtkhex
-%{_pkgconfigdir}/gtkhex.pc
+%attr(755,root,root) %{_libdir}/libgtkhex-3.so
+%{_libdir}/libgtkhex-3.la
+%{_includedir}/gtkhex-3
+%{_pkgconfigdir}/gtkhex-3.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgtkhex.a
+%{_libdir}/libgtkhex-3.a
