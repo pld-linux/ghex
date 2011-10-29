@@ -1,5 +1,5 @@
-Summary:	GNOME2 binary editor
-Summary(pl.UTF-8):	Edytor binarny dla GNOME2
+Summary:	GNOME binary editor
+Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
 Version:	3.0.0
 Release:	2
@@ -10,19 +10,23 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.0/%{name}-%{version}.tar.
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	atk-devel >= 1:1.22.0
-BuildRequires:	autoconf >= 2.53
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.61
+BuildRequires:	automake >= 1:1.10
 BuildRequires:	gettext-devel
+BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.12.0
-BuildRequires:	gtk+3-devel
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.36.1
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires(post,postun):	gtk-update-icon-cache
-Requires(post,postun):	hicolor-icon-theme
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	hicolor-icon-theme
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -33,17 +37,27 @@ non-ascii format for saving.
 
 %description -l pl.UTF-8
 GHex pozwala użytkownikowi na wczytanie danych z dowolnego pliku,
-przeglądanie i edycję ich w trybie szesnastkowym i ASCII.
-Obowiązkowe narzędzie dla wszystkich graczy, których gry zapisują
-stan w formacie innym niż tekstowy.
+przeglądanie i edycję ich w trybie szesnastkowym i ASCII. Obowiązkowe
+narzędzie dla wszystkich graczy, których gry zapisują stan w formacie
+innym niż tekstowy.
+
+%package libs
+Summary:	GHex library
+Summary(pl.UTF-8):	Biblioteka GHex
+Group:		X11/Libraries
+
+%description libs
+GHex library.
+
+%description libs -l pl.UTF-8
+Biblioteka GHex.
 
 %package devel
 Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	atk-devel >= 1:1.22.0
-Requires:	gtk+3-devel
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
 GHex devel files.
@@ -77,6 +91,7 @@ Biblioteka statyczna GHex.
 %{__automake}
 %configure \
 	--disable-schemas-compile \
+	--disable-silent-rules \
 	--enable-static
 %{__make}
 
@@ -86,37 +101,42 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+
 %find_lang %{name} --with-gnome --with-omf --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
 %update_icon_cache hicolor
 %glib_compile_schemas
 
 %postun
-/sbin/ldconfig
 %update_icon_cache hicolor
 %glib_compile_schemas
+
+%post libs -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/ghex
-%attr(755,root,root) %{_libdir}/libgtkhex-3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtkhex-3.so.0
 %{_datadir}/GConf/gsettings/ghex.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_desktopdir}/ghex.desktop
 %{_iconsdir}/hicolor/*/*/*
-%{_datadir}/ghex/ghex-ui.xml
+%{_datadir}/ghex
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgtkhex-3.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtkhex-3.so.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgtkhex-3.so
-%{_libdir}/libgtkhex-3.la
 %{_includedir}/gtkhex-3
 %{_pkgconfigdir}/gtkhex-3.pc
 
