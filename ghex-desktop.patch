@@ -5,6 +5,6 @@ diff -urN ghex-3.0.0.orig/data/ghex.desktop.in ghex-3.0.0/data/ghex.desktop.in
  Terminal=false
  Type=Application
  Icon=ghex
--Categories=GNOME;Development;
+-Categories=GNOME;GTK;Development;
 +Categories=GTK;GNOME;TextEditor;X-HexEditor;
  StartupNotify=true

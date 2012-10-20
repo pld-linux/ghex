@@ -1,22 +1,23 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.0.0
-Release:	2
+Version:	3.6.1
+Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	ffa346d6fa97b9e787680159a5479b84
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.6/%{name}-%{version}.tar.xz
+# Source0-md5:	49a6b7a75d12e1a0e926b705fe50b549
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake >= 1:1.10
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.12.0
-BuildRequires:	gtk+3-devel >= 3.0.0
-BuildRequires:	intltool >= 0.36.1
+BuildRequires:	gtk+3-devel >= 3.4.0
+BuildRequires:	intltool >= 0.41.1
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.311
@@ -57,7 +58,7 @@ Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+3-devel >= 3.0.0
+Requires:	gtk+3-devel >= 3.4.0
 
 %description devel
 GHex devel files.
@@ -121,13 +122,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README
+%doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/ghex
 %{_datadir}/GConf/gsettings/ghex.convert
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_desktopdir}/ghex.desktop
 %{_iconsdir}/hicolor/*/*/*
-%{_datadir}/ghex
 
 %files libs
 %defattr(644,root,root,755)
