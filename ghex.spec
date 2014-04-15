@@ -1,12 +1,12 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.6.1
+Version:	3.10.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.6/%{name}-%{version}.tar.xz
-# Source0-md5:	49a6b7a75d12e1a0e926b705fe50b549
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	bcd5af85a8e127da29257c9ca6aad5ee
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	atk-devel >= 1:1.22.0
@@ -23,7 +23,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
-Requires(post,postun):	/sbin/ldconfig
+BuildRequires:	yelp-tools
 Requires(post,postun):	glib2 >= 1:2.26.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
@@ -125,9 +125,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/ghex
 %{_datadir}/GConf/gsettings/ghex.convert
+%{_datadir}/appdata/ghex.appdata.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_desktopdir}/ghex.desktop
-%{_iconsdir}/hicolor/*/*/*
+%{_iconsdir}/HighContrast/*/*/*.png
+%{_iconsdir}/hicolor/*/*/*.png
+%{_iconsdir}/hicolor/*/*/*.svg
 
 %files libs
 %defattr(644,root,root,755)
