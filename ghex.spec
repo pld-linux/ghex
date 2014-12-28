@@ -12,7 +12,7 @@ URL:		http://www.gnu.org/directory/text/editors/ghex.html
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils >= 0.12.0
