@@ -1,21 +1,20 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.10.1
-Release:	2
+Version:	3.18.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	bcd5af85a8e127da29257c9ca6aad5ee
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.18/%{name}-%{version}.tar.xz
+# Source0-md5:	a2d1ce4d5350d8c625ee0c93be4c993d
 Patch0:		%{name}-desktop.patch
-URL:		http://www.gnu.org/directory/text/editors/ghex.html
+URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gnome-common
-BuildRequires:	gnome-doc-utils >= 0.12.0
 BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	intltool >= 0.41.1
 BuildRequires:	libtool >= 2:2.2.6
@@ -46,6 +45,9 @@ innym niż tekstowy.
 Summary:	GHex library
 Summary(pl.UTF-8):	Biblioteka GHex
 Group:		X11/Libraries
+Requires:	atk >= 1:1.22.0
+Requires:	glib2 >= 1:2.32.0
+Requires:	gtk+3 >= 3.4.0
 
 %description libs
 GHex library.
@@ -104,7 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang %{name} --with-gnome --with-omf --all-name
+%find_lang %{name} --with-gnome --all-name
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -117,8 +119,8 @@ rm -rf $RPM_BUILD_ROOT
 %update_icon_cache hicolor
 %glib_compile_schemas
 
-%post libs -p /sbin/ldconfig
-%postun libs -p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -128,9 +130,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/appdata/ghex.appdata.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_desktopdir}/ghex.desktop
-%{_iconsdir}/HighContrast/*/*/*.png
-%{_iconsdir}/hicolor/*/*/*.png
-%{_iconsdir}/hicolor/*/*/*.svg
+%{_iconsdir}/hicolor/*x*/apps/ghex.png
+%{_iconsdir}/hicolor/scalable/apps/ghex-symbolic.svg
 
 %files libs
 %defattr(644,root,root,755)
