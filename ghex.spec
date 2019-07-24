@@ -1,25 +1,22 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.18.3
+Version:	3.18.4
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	b17d66b9a52a87684468b06c75c4ba3e
+# Source0-md5:	7e6ed808766bc18285bdc6999bdf0f15
 Patch0:		%{name}-desktop.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	atk-devel >= 1:1.22.0
-BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake >= 1:1.11
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gnome-common
 BuildRequires:	gtk+3-devel >= 3.4.0
-BuildRequires:	intltool >= 0.41.1
-BuildRequires:	libtool >= 2:2.2.6
+BuildRequires:	meson >= 0.37.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	yelp-tools
@@ -85,26 +82,14 @@ Biblioteka statyczna GHex.
 %patch0 -p1
 
 %build
-%{__glib_gettextize}
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-schemas-compile \
-	--disable-silent-rules \
-	--enable-static
-%{__make}
+%meson build
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%ninja_install -C build
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -126,12 +111,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS NEWS README
 %attr(755,root,root) %{_bindir}/ghex
-%{_datadir}/GConf/gsettings/ghex.convert
-%{_datadir}/appdata/ghex.appdata.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
-%{_desktopdir}/ghex.desktop
-%{_iconsdir}/hicolor/*x*/apps/ghex.png
-%{_iconsdir}/hicolor/scalable/apps/ghex-symbolic.svg
+%{_datadir}/metainfo/org.gnome.GHex.appdata.xml
+%{_desktopdir}/org.gnome.GHex.desktop
+%{_iconsdir}/hicolor/*x*/apps/org.gnome.GHex.png
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex-symbolic.svg
 
 %files libs
 %defattr(644,root,root,755)
