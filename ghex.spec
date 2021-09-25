@@ -1,19 +1,19 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.18.4
+Version:	3.41.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/ghex/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	7e6ed808766bc18285bdc6999bdf0f15
+Source0:	https://download.gnome.org/sources/ghex/3.41/%{name}-%{version}.tar.xz
+# Source0-md5:	0fc3f2a70c0811e053f2b702dbf01033
 Patch0:		%{name}-desktop.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gtk+3-devel >= 3.4.0
-BuildRequires:	meson >= 0.37.0
+BuildRequires:	meson >= 0.50.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
@@ -109,13 +109,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS NEWS README
+%doc NEWS README.md
 %attr(755,root,root) %{_bindir}/ghex
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_datadir}/metainfo/org.gnome.GHex.appdata.xml
 %{_desktopdir}/org.gnome.GHex.desktop
-%{_iconsdir}/hicolor/*x*/apps/org.gnome.GHex.png
-%{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex-symbolic.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex.Devel.svg
+%{_iconsdir}/hicolor/symbolic/apps/org.gnome.GHex-symbolic.svg
 
 %files libs
 %defattr(644,root,root,755)
