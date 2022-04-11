@@ -1,9 +1,0 @@
---- ghex-3.18.4/data/org.gnome.GHex.desktop.in.orig	2019-07-24 17:45:29.762526849 +0200
-+++ ghex-3.18.4/data/org.gnome.GHex.desktop.in	2019-07-24 17:45:32.425845754 +0200
-@@ -9,5 +9,5 @@
- Type=Application
- # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
- Icon=org.gnome.GHex
--Categories=GNOME;GTK;Development;
-+Categories=GTK;GNOME;TextEditor;X-HexEditor;
- StartupNotify=true

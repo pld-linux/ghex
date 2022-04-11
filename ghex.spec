@@ -1,26 +1,33 @@
+# TODO: use gtk4-update-icon-cache
+#
+# Conditional build:
+%bcond_without	apidocs		# API documentation
+
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	3.41.1
+Version:	42.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	https://download.gnome.org/sources/ghex/3.41/%{name}-%{version}.tar.xz
-# Source0-md5:	8d2c32a81893637d32cacd8e5c1bee6d
-Patch0:		%{name}-desktop.patch
+Source0:	https://download.gnome.org/sources/ghex/42/%{name}-%{version}.tar.xz
+# Source0-md5:	0f4b4b7bb38e18adb51f54fbf2c98367
+Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
-BuildRequires:	atk-devel >= 1:1.22.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gtk+3-devel >= 3.4.0
-BuildRequires:	meson >= 0.50.0
+%{?with_apidocs:BuildRequires:	gi-docgen}
+BuildRequires:	glib2-devel >= 1:2.66.0
+BuildRequires:	gobject-introspection-devel
+BuildRequires:	gtk4-devel >= 4.0.0
+BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRequires:	yelp-tools
-Requires(post,postun):	glib2 >= 1:2.26.0
+Requires(post,postun):	glib2 >= 1:2.66.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -42,9 +49,8 @@ innym niż tekstowy.
 Summary:	GHex library
 Summary(pl.UTF-8):	Biblioteka GHex
 Group:		X11/Libraries
-Requires:	atk >= 1:1.22.0
-Requires:	glib2 >= 1:2.32.0
-Requires:	gtk+3 >= 3.4.0
+Requires:	glib2 >= 1:2.66.0
+Requires:	gtk4 >= 4.0.0
 
 %description libs
 GHex library.
@@ -57,7 +63,7 @@ Summary:	GHex devel files
 Summary(pl.UTF-8):	Pliki nagłówkowe GHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+3-devel >= 3.4.0
+Requires:	gtk4-devel >= 4.0.0
 
 %description devel
 GHex devel files.
@@ -77,12 +83,25 @@ GHex static library.
 %description static -l pl.UTF-8
 Biblioteka statyczna GHex.
 
+%package apidocs
+Summary:	API documentation for GHex library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki GHex
+Group:		Documentation
+BuildArch:	noarch
+
+%description apidocs
+API documentation for GHex library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki GHex.
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
-%meson build
+%meson build \
+	%{?with_apidocs:-Dgtk_doc=true}
 
 %ninja_build -C build
 
@@ -91,7 +110,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
-%find_lang %{name} --with-gnome --all-name
+%if %{with apidocs}
+install -d $RPM_BUILD_ROOT%{_gtkdocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/gtkhex-4.0 $RPM_BUILD_ROOT%{_gtkdocdir}
+%endif
+
+%find_lang %{name} --with-gnome
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -111,6 +135,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc NEWS README.md
 %attr(755,root,root) %{_bindir}/ghex
+%dir %{_libdir}/gtkhex-4.0
+%attr(755,root,root) %{_libdir}/gtkhex-4.0/libhex-buffer-mmap.so
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_datadir}/metainfo/org.gnome.GHex.appdata.xml
 %{_desktopdir}/org.gnome.GHex.desktop
@@ -120,15 +146,23 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtkhex-3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtkhex-3.so.0
+%attr(755,root,root) %{_libdir}/libgtkhex-4.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtkhex-4.so.0
+%{_libdir}/girepository-1.0/Hex-4.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtkhex-3.so
-%{_includedir}/gtkhex-3
-%{_pkgconfigdir}/gtkhex-3.pc
+%attr(755,root,root) %{_libdir}/libgtkhex-4.so
+%{_includedir}/gtkhex-4
+%{_datadir}/gir-1.0/Hex-4.gir
+%{_pkgconfigdir}/gtkhex-4.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgtkhex-3.a
+%{_libdir}/libgtkhex-4.a
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/gtkhex-4.0
+%endif
