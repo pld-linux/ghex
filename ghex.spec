@@ -6,28 +6,30 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	42.3
+Version:	43.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	https://download.gnome.org/sources/ghex/42/%{name}-%{version}.tar.xz
-# Source0-md5:	4c08a5ea634c4f989aa79509ef0de3c7
+Source0:	https://download.gnome.org/sources/ghex/43/%{name}-%{version}.tar.xz
+# Source0-md5:	471b255b7e25d6673e9cd34a47d2cc1e
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
 %{?with_apidocs:BuildRequires:	gi-docgen}
-BuildRequires:	glib2-devel >= 1:2.66.0
+BuildRequires:	glib2-devel >= 1:2.68.0
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk4-devel >= 4.0.0
+BuildRequires:	gtk4-devel >= 4.4.0
+BuildRequires:	libadwaita-devel
 BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
+BuildRequires:	vala
 BuildRequires:	xz
 BuildRequires:	yelp-tools
-Requires(post,postun):	glib2 >= 1:2.66.0
+Requires(post,postun):	glib2 >= 1:2.68.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -46,54 +48,67 @@ narzędzie dla wszystkich graczy, których gry zapisują stan w formacie
 innym niż tekstowy.
 
 %package libs
-Summary:	GHex library
-Summary(pl.UTF-8):	Biblioteka GHex
+Summary:	GtkHex library
+Summary(pl.UTF-8):	Biblioteka GtkHex
 Group:		X11/Libraries
-Requires:	glib2 >= 1:2.66.0
-Requires:	gtk4 >= 4.0.0
+Requires:	glib2 >= 1:2.68.0
+Requires:	gtk4 >= 4.4.0
 
 %description libs
-GHex library.
+GtkHex library.
 
 %description libs -l pl.UTF-8
-Biblioteka GHex.
+Biblioteka GtkHex.
 
 %package devel
-Summary:	GHex devel files
-Summary(pl.UTF-8):	Pliki nagłówkowe GHex
+Summary:	Header files for GtkHex library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GtkHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk4-devel >= 4.0.0
+Requires:	gtk4-devel >= 4.4.0
 
 %description devel
-GHex devel files.
+Header files for GtkHex library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe GHex.
+Pliki nagłówkowe biblioteki GtkHex.
 
 %package static
-Summary:	GHex static library
-Summary(pl.UTF-8):	Biblioteka statyczna GHex
+Summary:	GtkHex static library
+Summary(pl.UTF-8):	Biblioteka statyczna GtkHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-GHex static library.
+GtkHex static library.
 
 %description static -l pl.UTF-8
-Biblioteka statyczna GHex.
+Biblioteka statyczna GtkHex.
+
+%package -n vala-gtkhex
+Summary:	Vala API for GtkHex library
+Summary(pl.UTF-8):	API języka Vala do biblioteki GtkHex
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	vala
+
+%description -n vala-gtkhex
+Vala API for GtkHex library.
+
+%description -n vala-gtkhex -l pl.UTF-8
+API języka Vala do biblioteki GtkHex.
 
 %package apidocs
-Summary:	API documentation for GHex library
-Summary(pl.UTF-8):	Dokumentacja API biblioteki GHex
+Summary:	API documentation for GtkHex library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki GtkHex
 Group:		Documentation
 BuildArch:	noarch
 
 %description apidocs
-API documentation for GHex library.
+API documentation for GtkHex library.
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API biblioteki GHex.
+Dokumentacja API biblioteki GtkHex.
 
 %prep
 %setup -q
@@ -101,7 +116,8 @@ Dokumentacja API biblioteki GHex.
 
 %build
 %meson build \
-	%{?with_apidocs:-Dgtk_doc=true}
+	%{?with_apidocs:-Dgtk_doc=true} \
+	-Dvapi=true
 
 %ninja_build -C build
 
@@ -136,6 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc NEWS README.md
 %attr(755,root,root) %{_bindir}/ghex
 %dir %{_libdir}/gtkhex-4.0
+%attr(755,root,root) %{_libdir}/gtkhex-4.0/libhex-buffer-direct.so
 %attr(755,root,root) %{_libdir}/gtkhex-4.0/libhex-buffer-mmap.so
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
 %{_datadir}/metainfo/org.gnome.GHex.appdata.xml
@@ -147,7 +164,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgtkhex-4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtkhex-4.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgtkhex-4.so.1
 %{_libdir}/girepository-1.0/Hex-4.typelib
 
 %files devel
@@ -160,6 +177,11 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgtkhex-4.a
+
+%files -n vala-gtkhex
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/gtkhex-4.deps
+%{_datadir}/vala/vapi/gtkhex-4.vapi
 
 %if %{with apidocs}
 %files apidocs
