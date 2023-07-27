@@ -6,12 +6,12 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	43.1
+Version:	44.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	https://download.gnome.org/sources/ghex/43/%{name}-%{version}.tar.xz
-# Source0-md5:	471b255b7e25d6673e9cd34a47d2cc1e
+Source0:	https://download.gnome.org/sources/ghex/44/%{name}-%{version}.tar.xz
+# Source0-md5:	7a43fac6b28b096c49180e0b686d6b5e
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
@@ -127,9 +127,13 @@ rm -rf $RPM_BUILD_ROOT
 %ninja_install -C build
 
 %if %{with apidocs}
+# FIXME: where to package gi-docgen generated docs?
 install -d $RPM_BUILD_ROOT%{_gtkdocdir}
 %{__mv} $RPM_BUILD_ROOT%{_docdir}/gtkhex-4.0 $RPM_BUILD_ROOT%{_gtkdocdir}
 %endif
+
+# not supported by glibc (as of 2.37)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ie
 
 %find_lang %{name} --with-gnome
 
