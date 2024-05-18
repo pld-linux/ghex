@@ -6,12 +6,12 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	45.1
+Version:	46.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	https://download.gnome.org/sources/ghex/45/%{name}-%{version}.tar.xz
-# Source0-md5:	54eafa6969a6593e9e3e94def171bd86
+Source0:	https://download.gnome.org/sources/ghex/46/%{name}-%{version}.tar.xz
+# Source0-md5:	0079e4a5bd8103529e78b77616674d76
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
@@ -19,7 +19,7 @@ BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.68.0
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gtk4-devel >= 4.4.0
-BuildRequires:	libadwaita-devel
+BuildRequires:	libadwaita-devel >= 1.2
 BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
@@ -33,6 +33,7 @@ Requires(post,postun):	glib2 >= 1:2.68.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
+Requires:	libadwaita >= 1.2
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,6 +66,7 @@ Summary:	Header files for GtkHex library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GtkHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.68.0
 Requires:	gtk4-devel >= 4.4.0
 
 %description devel
