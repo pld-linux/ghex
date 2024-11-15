@@ -6,12 +6,12 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	46.0
+Version:	46.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	https://download.gnome.org/sources/ghex/46/%{name}-%{version}.tar.xz
-# Source0-md5:	0079e4a5bd8103529e78b77616674d76
+# Source0-md5:	538c4f0e0ec300ae0bd5f07f0a9b62d8
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
