@@ -6,12 +6,12 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	46.1
+Version:	46.2
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
 Source0:	https://download.gnome.org/sources/ghex/46/%{name}-%{version}.tar.xz
-# Source0-md5:	538c4f0e0ec300ae0bd5f07f0a9b62d8
+# Source0-md5:	63e3db33bd0d5dc9eef0632e0623ba7b
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
@@ -24,7 +24,7 @@ BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	vala
 BuildRequires:	xz
@@ -117,16 +117,16 @@ Dokumentacja API biblioteki GtkHex.
 %patch -P0 -p1
 
 %build
-%meson build \
+%meson \
 	%{?with_apidocs:-Dgtk_doc=true} \
 	-Dvapi=true
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %if %{with apidocs}
 install -d $RPM_BUILD_ROOT%{_gidocdir}
