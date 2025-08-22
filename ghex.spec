@@ -6,20 +6,20 @@
 Summary:	GNOME binary editor
 Summary(pl.UTF-8):	Edytor binarny dla GNOME
 Name:		ghex
-Version:	46.3
+Version:	48.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications/Editors
-Source0:	https://download.gnome.org/sources/ghex/46/%{name}-%{version}.tar.xz
-# Source0-md5:	5431d5ee4cbc2d36eb4f000149a41ddc
+Source0:	https://download.gnome.org/sources/ghex/48/%{name}-%{version}.tar.xz
+# Source0-md5:	ed80f8e75dae48409f46ad16eda9227d
 Patch0:		%{name}-no-update.patch
 URL:		https://wiki.gnome.org/Apps/Ghex
 BuildRequires:	gettext-tools
 %{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	glib2-devel >= 1:2.68.0
 BuildRequires:	gobject-introspection-devel
-BuildRequires:	gtk4-devel >= 4.4.0
-BuildRequires:	libadwaita-devel >= 1.2
+BuildRequires:	gtk4-devel >= 4.17.5
+BuildRequires:	libadwaita-devel >= 1.7
 BuildRequires:	meson >= 0.59.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
@@ -33,7 +33,7 @@ Requires(post,postun):	glib2 >= 1:2.68.0
 Requires(post,postun):	gtk-update-icon-cache
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
-Requires:	libadwaita >= 1.2
+Requires:	libadwaita >= 1.7
 Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -53,7 +53,7 @@ Summary:	GtkHex library
 Summary(pl.UTF-8):	Biblioteka GtkHex
 Group:		X11/Libraries
 Requires:	glib2 >= 1:2.68.0
-Requires:	gtk4 >= 4.4.0
+Requires:	gtk4 >= 4.17.5
 
 %description libs
 GtkHex library.
@@ -67,7 +67,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki GtkHex
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.68.0
-Requires:	gtk4-devel >= 4.4.0
+Requires:	gtk4-devel >= 4.17.5
 
 %description devel
 Header files for GtkHex library.
@@ -119,6 +119,7 @@ Dokumentacja API biblioteki GtkHex.
 %build
 %meson \
 	%{?with_apidocs:-Dgtk_doc=true} \
+	-Dintrospection=enabled \
 	-Dvapi=true
 
 %meson_build
@@ -159,8 +160,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/gtkhex-4.0
 %attr(755,root,root) %{_libdir}/gtkhex-4.0/libhex-buffer-direct.so
 %attr(755,root,root) %{_libdir}/gtkhex-4.0/libhex-buffer-mmap.so
+%{_datadir}/dbus-1/services/org.gnome.GHex.service
 %{_datadir}/glib-2.0/schemas/org.gnome.GHex.gschema.xml
-%{_datadir}/metainfo/org.gnome.GHex.appdata.xml
+%{_datadir}/metainfo/org.gnome.GHex.metainfo.xml
 %{_desktopdir}/org.gnome.GHex.desktop
 %{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex.svg
 %{_iconsdir}/hicolor/scalable/apps/org.gnome.GHex.Devel.svg
